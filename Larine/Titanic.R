@@ -14,7 +14,7 @@ TitanicObject <- function () {
 
 ###Data Manipulation 
 createAgeGroups <- function(t) {
-  t$AgeGroup <- 'NA'
+  t$AgeGroup <- "NA"
   t$AgeGroup[t$Age >= 65] <- 'Elderly'
   t$AgeGroup[t$Age < 65 & t$Age >= 18] <- 'Adult'
   t$AgeGroup[t$Age > 2 & t$Age < 18] <- 'Child'
@@ -61,7 +61,6 @@ addTitle <- function(t) {
 
 SurvivalByVariable <- function(t, survived, variable){
   data <- as.data.frame(aggregate(survived ~ variable, data=t , FUN=sum))
-  data <- na.omit(data)
   xLabel <- deparse(substitute(variable))
   g <- ggplot(data, aes(x= variable, y = survived, fill = variable)) + geom_bar(stat = "identity") + labs(x=xLabel, y="Number of Survivors", fill = xLabel)
   return(print(g))
@@ -69,7 +68,6 @@ SurvivalByVariable <- function(t, survived, variable){
 
 SurvivalByVariablePercentage <- function(t, survived, variable){
   asPercentage <- as.data.frame(aggregate(survived ~ variable, data=t , FUN=function(x) {sum(x)/length(x)}))
-  asPercentage <- na.omit(asPercentage)
   xLabel <- deparse(substitute(variable))
   g <- ggplot(asPercentage, aes(x= variable, y = survived, fill = variable)) + geom_bar(stat = "identity") + labs(x=xLabel, y="Percentage of Survivors", fill = xLabel)
   return(print(g))
@@ -77,7 +75,6 @@ SurvivalByVariablePercentage <- function(t, survived, variable){
 
 SurvivalTwoVariables <- function(t, survived, variable1, variable2){
   data <- as.data.frame(aggregate(survived ~ variable1 + variable2, data=t , FUN=sum))
-  data <- na.omit(data)
   xLabel <- deparse(substitute(variable1))
   legendLabel <- deparse(substitute(variable2))
   g <- ggplot(data, aes(x= variable1, y = survived, fill = variable2)) + geom_bar(stat = "identity") + labs(x=xLabel, "Number of Survivors", fill = legendLabel)
@@ -86,7 +83,6 @@ SurvivalTwoVariables <- function(t, survived, variable1, variable2){
 
 SurvivalTwoVariablesPercentage <- function(t, survived, variable1, variable2){
   asPercentage <- as.data.frame(aggregate(survived ~ variable1 + variable2, data=t , FUN=function(x) {sum(x)/length(x)}))
-  asPercentage <- na.omit(asPercentage)
   xLabel <- deparse(substitute(variable1))
   legendLabel <- deparse(substitute(variable2))
   g <- ggplot(asPercentage, aes(x= variable1, y = survived, fill = variable2)) + geom_bar(stat = "identity", position=position_dodge()) +  labs(x=xLabel, y="Percentage of Survivors", fill = legendLabel)
