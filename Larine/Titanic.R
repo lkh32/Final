@@ -46,13 +46,13 @@ createFirstClass <- function(t) {
 
 
 addTitle <- function(t) {
-  t$Title <- sapply(t$Name, FUN=function(x) {strsplit(x, split='[,.]')[[1]][2]})
+  t$Title <- sapply(as.character(t$Name), FUN=function(x) {strsplit(x, split='[,.]')[[1]][2]})
   t$Title <- sub(' ', '', t$Title)
   table(t$Title)
   
   t$Title[t$Title %in% c('Miss', 'Mrs', 'Ms','Mme', 'Mlle')] <- 'Miss'
-  t$Title[t$Title %in% c('Capt', 'Don', 'Major', 'Sir', 'Rev', 'Col', 'Dr', 'Master')] <- 'Sir'
-  t$Title[t$Title %in% c('Dona', 'Lady', 'the Countess', 'Jonkheer')] <- 'Lady'
+  t$Title[t$Title %in% c('Capt', 'Don', 'Major', 'Sir', 'Rev', 'Col', 'Dr', 'Master', 'Jonkheer')] <- 'Sir'
+  t$Title[t$Title %in% c('Dona', 'Lady', 'the Countess')] <- 'Lady'
   t$Title <- factor(t$Title)
   return(t)
 }
